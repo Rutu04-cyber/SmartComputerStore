@@ -4,17 +4,17 @@ import mysql.connector
 
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  
+app.secret_key = 'your_secret_key'
 
 # Database connection
 def get_db_connection():
     try:
         connection = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='Rutu@3158',
-            database='computerstore',
-            port=3307
+            host='Rutu35.mysql.pythonanywhere-services.com',  # Database host provided by PythonAnywhere
+            user='Rutu35',  # Your PythonAnywhere database username
+            password='Sting@3158',  # Your PythonAnywhere database password
+            database='Rutu35$computerstore',  # Database name prefixed with your username
+
         )
         return connection
     except mysql.connector.Error as err:
@@ -102,16 +102,20 @@ products_data = {
 }
 
 
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('computershop.html')  # Home page
+    return render_template("computershop.html")
+
 
 # Login Route
 from werkzeug.security import check_password_hash
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    cursor = None  # Initialize cursor
+    # Initialize cursor
+    connection = None
+    cursor = None
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -122,16 +126,16 @@ def login():
                 flash('Failed to connect to the database', 'danger')
                 return render_template('login.html')
 
-            cursor = connection.cursor(dictionary=True)
-
             # Fetch user by username
+            cursor = connection.cursor(dictionary=True)
             cursor.execute("SELECT * FROM customer WHERE username = %s", (username,))
             user = cursor.fetchone()
 
+            # Check if user exists and password matches
             if user and check_password_hash(user['password'], password):
                 session['user_id'] = user['id']  # Store user session
                 flash('Login successful!', 'success')
-                return redirect(url_for('home'))  # Update with your home page route
+                return redirect(url_for('home'))  # Replace with your home page route
             else:
                 flash('Invalid username or password', 'danger')
 
@@ -362,19 +366,19 @@ def admin_dashboard():
 # Fetch purchased products for each customer
         for customer in customers:
             cursor.execute("""
-                SELECT 
-                    p.id AS product_id, 
+                SELECT
+                    p.id AS product_id,
                     p.name AS product_name,
                     p.category,  -- Add category to query
-                    op.quantity, 
-                    op.price 
-                FROM 
-                    orders o 
-                JOIN 
-                    order_products op ON o.id = op.order_id 
-                JOIN 
-                    products p ON op.product_id = p.id 
-                WHERE 
+                    op.quantity,
+                    op.price
+                FROM
+                    orders o
+                JOIN
+                    order_products op ON o.id = op.order_id
+                JOIN
+                    products p ON op.product_id = p.id
+                WHERE
                     o.customer_id = %s
             """, (customer['id'],))
             customer['purchased_products'] = cursor.fetchall()
@@ -472,7 +476,7 @@ def delete_customer(customer_id):
     finally:
         if cursor:
             cursor.close()
-        if connection:  
+        if connection:
             connection.close()
 
     return redirect(url_for('admin_dashboard'))
