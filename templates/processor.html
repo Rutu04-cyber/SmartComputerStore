@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processors</title>
+    <link rel="stylesheet" href="static/css/processor.css">
+</head>
+<body>
+        <!-- Navigation Bar -->
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signup') }}">Signup</a></li>
+                <li><a href="{{ url_for('cart') }}">Cart</a></li>
+                <li><a href="{{ url_for('payment') }}">Payment</a></li>
+            </ul>
+        </nav>
+    
+    <h1>Processors</h1>
+    <ul>
+        {% for product in products %}
+            <li>
+                {{ product['name'] }} - Price: {{ product['price'] }}
+                <form method="POST" action="{{ url_for('add_to_cart') }}">
+                    <input type="hidden" name="id" value="{{ product['id'] }}">
+                    <input type="hidden" name="name" value="{{ product['name'] }}">
+                    <input type="hidden" name="price" value="{{ product['price'] }}">
+                    <input type="number" name="quantity" value="1" min="1" required>
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

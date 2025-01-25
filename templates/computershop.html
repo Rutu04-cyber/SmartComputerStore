@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Shop</title>
+    <link rel="stylesheet" href="/static/css/computershop.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('signup') }}">Signup</a></li>
+            <li><a href="{{ url_for('cart') }}">Cart</a></li>
+            <li><a href="{{ url_for('payment') }}">Payment</a></li>
+            <li><a href="{{ url_for('admin_login') }}">Admin</a></li>
+        </ul>
+    </nav>
+
+    <h1>Welcome to the Computer Shop</h1>
+
+    <div class="product-category">
+        <h2>Product Categories</h2>
+        <div class="categories">
+            <div class="category">
+                <a href="{{ url_for('monitor') }}">
+                    <p>Monitors</p>
+                    <img src="{{ url_for('static', filename='images/monitor/Dell 24-Inch FHD 165Hz .jpg') }}" alt="Monitors">
+                </a>    
+            </div>
+            <div class="category">
+                <a href="{{ url_for('mouse') }}">
+                    <p>Mouse</p>
+                    <img src="{{ url_for('static', filename='images/mouse/logetch m09.jpg') }}" alt="Logitech M90 Wired Mouse">
+                </a>
+            </div>
+            <div class="category">
+                <a href="{{ url_for('cabinet') }}">
+                    <p>Cabinets</p>
+                    <img src="{{ url_for('static', filename='images/cabinet/corsair 100r.jpg') }}" alt="Corsair Carbide Series 100R">  
+                </a>
+            </div>
+            <div class="category">
+                <a href="{{ url_for('keyboard') }}">
+                    <p>Keyboards</p>
+                    <img src="{{ url_for('static', filename='images/keyboard/dell kb522.jpg') }}" alt="Dell KB216 Wired Keyboard">
+                </a>  
+            </div>
+            <div class="category">
+                <a href="{{ url_for('graphiccard') }}">
+                    <p>Graphic Cards</p>
+                    <img src="{{ url_for('static', filename='images/graphiccard/Aorus 4090.jpg') }}" alt="Aorus NVIDIA GeForce RTX 4090">
+                </a>
+            </div>
+            <div class="category">
+                <a href="{{ url_for('processor') }}">
+                    <p>Processors</p>
+                    <img src="{{ url_for('static', filename='images/processor/9 9950x.jpg') }}" alt="AMD Ryzen 9 9950X">
+                </a>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer>
+        <p>&copy; 2024 Computer Shop. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

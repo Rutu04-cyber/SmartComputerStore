@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="static/css/payment.css">
+
+    <script>
+        // Show/hide details based on payment method selection
+        function togglePaymentDetails() {
+            const paymentMethod = document.getElementById("payment_method").value;
+            const cardDetails = document.getElementById("card_details");
+            const upiDetails = document.getElementById("upi_details");
+
+            cardDetails.style.display = "none";
+            upiDetails.style.display = "none";
+
+            if (paymentMethod === "credit_card") {
+                cardDetails.style.display = "block";
+            } else if (paymentMethod === "paypal") {
+                upiDetails.style.display = "block";
+            }
+        }
+
+        // Validate the form based on the selected payment method
+        function validateForm() {
+            const paymentMethod = document.getElementById("payment_method").value;
+
+            if (paymentMethod === "credit_card") {
+                const requiredFields = ['account_number', 'cardholder_name', 'card_number', 'card_expiry', 'card_cvc'];
+                for (const field of requiredFields) {
+                    const input = document.getElementsByName(field)[0];
+                    if (!input.value.trim()) {
+                        alert(`Please fill in the ${field.replace('_', ' ')}.`);
+                        return false;
+                    }
+                }
+            } else if (paymentMethod === "paypal") {
+                const upiField = document.getElementsByName('upi_id')[0];
+                if (!upiField.value.trim()) {
+                    alert("Please enter your UPI ID.");
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+        <!-- Navigation Bar -->
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signup') }}">Signup</a></li>
+                <li><a href="{{ url_for('cart') }}">Cart</a></li>
+            </ul>
+        </nav>
+    
+    <h1>Payment</h1>
+    <form method="POST" onsubmit="return validateForm()">
+        <!-- Personal Details Section -->
+        <h2>Personal Details</h2>
+        <label for="name">Name:</label>
+        <input type="text" name="name" required placeholder="Enter your full name"><br><br>
+        
+        <label for="contact">Contact Number:</label>
+        <input type="tel" name="contact" pattern="\d{10}" placeholder="Enter 10-digit contact number" required><br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" name="email" placeholder="Enter your email address" required><br><br>
+
+        <label for="address">Address:</label>
+        <textarea name="address" required placeholder="Enter your address" rows="3" cols="40"></textarea><br><br>
+
+        <!-- Payment Method Selection -->
+        <h2>Payment Method</h2>
+        <label for="payment_method">Select Payment Method:</label>
+        <select name="payment_method" id="payment_method" required onchange="togglePaymentDetails()">
+            <option value="" disabled selected>Select Payment Method</option>
+            <option value="credit_card">Credit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="cash_on_delivery">Cash on Delivery</option>
+        </select><br><br>
+
+        <!-- Credit Card Details Section -->
+        <div id="card_details" style="display:none; border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
+            <h3>Credit Card Details</h3>
+            <label for="account_number">Account Number:</label>
+            <input type="text" name="account_number" pattern="\d{16}" placeholder="Enter 16-digit account number"><br><br>
+
+            <label for="cardholder_name">Cardholder Name:</label>
+            <input type="text" name="cardholder_name" placeholder="Enter cardholder name"><br><br>
+
+            <label for="card_number">Card Number:</label>
+            <input type="text" name="card_number" pattern="\d{16}" placeholder="Enter 16-digit card number"><br><br>
+
+            <label for="card_expiry">Expiry Date (MM/YY):</label>
+            <input type="text" name="card_expiry" pattern="\d{2}/\d{2}" placeholder="MM/YY"><br><br>
+
+            <label for="card_cvc">CVC:</label>
+            <input type="text" name="card_cvc" pattern="\d{3}" placeholder="CVC"><br><br>
+        </div>
+
+        <!-- PayPal / UPI Details Section -->
+        <div id="upi_details" style="display:none; border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
+            <h3>UPI Details</h3>
+            <label for="upi_id">UPI ID:</label>
+            <input type="text" name="upi_id" placeholder="Enter your UPI ID"><br><br>
+        </div>
+
+        <!-- Cash on Delivery Message -->
+        <div id="cod_details" style="margin-top: 10px;">
+            <p><strong>Note:</strong> Cash on Delivery payments will be collected upon delivery.</p>
+        </div>
+
+        {% if success %}
+        <p style="color: green; font-weight: bold;">Payment done successfully!</p>
+        {% endif %}
+    
+        <form method="POST" onsubmit="return validateForm()">
+            <!-- Your existing form fields -->
+            <!-- ... -->
+    
+            <!-- Submit Button -->
+            <button type="submit">Proceed with Payment</button>
+        </form>
+    </body>
+</html>
