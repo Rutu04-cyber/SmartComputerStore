@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Processors</title>
-    <link rel="stylesheet" href="static/css/processor.css">
+    <link rel="stylesheet" href="static/css/cabinet.css"> <!-- Link to the updated cabinet.css -->
 </head>
 <body>
-        <!-- Navigation Bar -->
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('signup') }}">Signup</a></li>
-                <li><a href="{{ url_for('cart') }}">Cart</a></li>
-                <li><a href="{{ url_for('payment') }}">Payment</a></li>
-            </ul>
-        </nav>
-    
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('signup') }}">Signup</a></li>
+            <li><a href="{{ url_for('cart') }}">Cart</a></li>
+            <li><a href="{{ url_for('payment') }}">Payment</a></li>
+        </ul>
+    </nav>
+
     <h1>Processors</h1>
-    <ul>
+    
+    <!-- Container for the product cards -->
+    <div class="product-container">
         {% for product in products %}
-            <li>
-                {{ product['name'] }} - Price: {{ product['price'] }}
+            <div class="product-card">
+                <img src="{{ url_for('static', filename=product['image']) }}" alt="{{ product['name'] }}" class="product-image">
+                <h2>{{ product['name'] }}</h2>
+                <p>Price: {{ product['price'] }}</p>
                 <form method="POST" action="{{ url_for('add_to_cart') }}">
                     <input type="hidden" name="id" value="{{ product['id'] }}">
                     <input type="hidden" name="name" value="{{ product['name'] }}">
@@ -30,8 +34,8 @@
                     <input type="number" name="quantity" value="1" min="1" required>
                     <button type="submit">Add to Cart</button>
                 </form>
-            </li>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 </body>
 </html>
