@@ -1,32 +1,62 @@
 /* monitor.css */
 
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* Body styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    color: #333;
 }
 
+/* Navigation Bar */
+nav {
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Main Heading */
 h1 {
-    color: #333;
+    text-align: center;
     margin: 20px 0;
 }
 
-/* Container for the product cards */
+/* Product Container */
 .product-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust for responsive design */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
     gap: 20px;
     padding: 20px;
     max-width: 1200px;
-    width: 100%;
+    margin: 0 auto; /* Center the container */
 }
 
-/* Styles for individual product cards */
+/* Product Card */
 .product-card {
     background-color: white;
     border-radius: 8px;
@@ -40,10 +70,10 @@ h1 {
     transform: scale(1.05); /* Smooth hover effect */
 }
 
-/* Image styling */
+/* Product Image */
 .product-image {
     width: 100%;
-    max-width: 250px;
+    max-width: 250px; /* Limit the max width */
     height: auto;
     border-radius: 8px;
     margin-bottom: 15px;
@@ -62,7 +92,7 @@ h1 {
     font-size: 1em;
 }
 
-/* Styling for the add to cart form */
+/* Form Elements */
 form {
     display: flex;
     flex-direction: column;
@@ -70,7 +100,7 @@ form {
     gap: 10px;
 }
 
-/* Styling for quantity input and button */
+/* Quantity Input */
 form input[type="number"] {
     padding: 5px 10px;
     font-size: 1em;
@@ -79,6 +109,7 @@ form input[type="number"] {
     width: 60px;
 }
 
+/* Button to add item to cart */
 form button {
     padding: 10px 20px;
     background-color: #5cb85c;
@@ -96,10 +127,11 @@ form button:hover {
 
 /* Link styling for cart navigation */
 a {
+    display: block;
+    text-align: center;
+    margin: 20px;
     text-decoration: none;
     color: #007bff;
-    font-size: 1.1em;
-    margin-top: 20px;
     font-weight: bold;
 }
 
